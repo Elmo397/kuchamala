@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="postgres@localhost">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.16">
+    <root id="1">
+      <ServerVersion>10.10</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="postgres">
+      <ObjectId>13057</ObjectId>
+      <Comment>default administrative connection database</Comment>
+      <Owner>postgres</Owner>
+      <IntrospectionStateNumber>834</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Relations>sequence|table|17125|17127|1
+sequence|table|17136|17138|1
+sequence|table|17144|17146|1
+sequence|table|17155|17157|1
+sequence|table|17166|17168|1
+sequence|table|17174|17176|1
+</Relations>
+    </database>
+    <role id="3" parent="1" name="pg_monitor">
+      <ObjectId>3373</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="4" parent="1" name="pg_read_all_settings">
+      <ObjectId>3374</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="5" parent="1" name="pg_read_all_stats">
+      <ObjectId>3375</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="6" parent="1" name="pg_signal_backend">
+      <ObjectId>4200</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="7" parent="1" name="pg_stat_scan_tables">
+      <ObjectId>3377</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="8" parent="1" name="postgres">
+      <ObjectId>10</ObjectId>
+      <SuperRole>1</SuperRole>
+      <Inherit>1</Inherit>
+      <CreateRole>1</CreateRole>
+      <CreateDb>1</CreateDb>
+      <CanLogin>1</CanLogin>
+      <ConnectionLimit>-1</ConnectionLimit>
+      <Replication>1</Replication>
+      <BypassRls>1</BypassRls>
+    </role>
+    <schema id="9" parent="2" name="information_schema">
+      <ObjectId>12766</ObjectId>
+      <StateNumber>353</StateNumber>
+      <Owner>postgres</Owner>
+    </schema>
+    <schema id="10" parent="2" name="pg_catalog">
+      <ObjectId>11</ObjectId>
+      <Comment>system catalog schema</Comment>
+      <StateNumber>350</StateNumber>
+      <Owner>postgres</Owner>
+    </schema>
+    <schema id="11" parent="2" name="public">
+      <ObjectId>2200</ObjectId>
+      <Comment>standard public schema</Comment>
+      <StateNumber>351</StateNumber>
+      <Owner>postgres</Owner>
+      <IntrospectionStateNumber>835</IntrospectionStateNumber>
+      <Current>1</Current>
+    </schema>
+    <access-method id="12" parent="2" name="btree">
+      <ObjectId>403</ObjectId>
+      <Comment>b-tree index access method</Comment>
+      <StateNumber>1</StateNumber>
+      <Handler>pg_catalog.bthandler</Handler>
+      <HandlerId>330</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="13" parent="2" name="hash">
+      <ObjectId>405</ObjectId>
+      <Comment>hash index access method</Comment>
+      <StateNumber>1</StateNumber>
+      <Handler>pg_catalog.hashhandler</Handler>
+      <HandlerId>331</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="14" parent="2" name="gist">
+      <ObjectId>783</ObjectId>
+      <Comment>GiST index access method</Comment>
+      <StateNumber>1</StateNumber>
+      <Handler>pg_catalog.gisthandler</Handler>
+      <HandlerId>332</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="15" parent="2" name="gin">
+      <ObjectId>2742</ObjectId>
+      <Comment>GIN index access method</Comment>
+      <StateNumber>1</StateNumber>
+      <Handler>pg_catalog.ginhandler</Handler>
+      <HandlerId>333</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="16" parent="2" name="spgist">
+      <ObjectId>4000</ObjectId>
+      <Comment>SP-GiST index access method</Comment>
+      <StateNumber>1</StateNumber>
+      <Handler>pg_catalog.spghandler</Handler>
+      <HandlerId>334</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="17" parent="2" name="brin">
+      <ObjectId>3580</ObjectId>
+      <Comment>block range index (BRIN) access method</Comment>
+      <StateNumber>1</StateNumber>
+      <Handler>pg_catalog.brinhandler</Handler>
+      <HandlerId>335</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <extension id="18" parent="2" name="plpgsql">
+      <ObjectId>13043</ObjectId>
+      <Comment>PL/pgSQL procedural language</Comment>
+      <StateNumber>505</StateNumber>
+      <Version>1.0</Version>
+      <SchemaName>pg_catalog</SchemaName>
+      <SchemaId>11</SchemaId>
+    </extension>
+    <sequence id="19" parent="11" name="childage_id_seq">
+      <ObjectId>17136</ObjectId>
+      <StateNumber>806</StateNumber>
+      <Owner>postgres</Owner>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <sequence id="20" parent="11" name="classes_id_seq">
+      <ObjectId>17144</ObjectId>
+      <StateNumber>806</StateNumber>
+      <Owner>postgres</Owner>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <sequence id="21" parent="11" name="locations_id_seq">
+      <ObjectId>17155</ObjectId>
+      <StateNumber>806</StateNumber>
+      <Owner>postgres</Owner>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <sequence id="22" parent="11" name="teachers_id_seq">
+      <ObjectId>17125</ObjectId>
+      <StateNumber>806</StateNumber>
+      <Owner>postgres</Owner>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <sequence id="23" parent="11" name="timetable_id_seq">
+      <ObjectId>17174</ObjectId>
+      <StateNumber>806</StateNumber>
+      <Owner>postgres</Owner>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <sequence id="24" parent="11" name="weekdays_id_seq">
+      <ObjectId>17166</ObjectId>
+      <StateNumber>806</StateNumber>
+      <Owner>postgres</Owner>
+      <SequenceIdentity>1</SequenceIdentity>
+      <CacheSize>1</CacheSize>
+      <DataType>integer</DataType>
+    </sequence>
+    <table id="25" parent="11" name="childage">
+      <ObjectId>17138</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>806</StateNumber>
+    </table>
+    <table id="26" parent="11" name="classes">
+      <ObjectId>17146</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>806</StateNumber>
+    </table>
+    <table id="27" parent="11" name="locations">
+      <ObjectId>17157</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>806</StateNumber>
+    </table>
+    <table id="28" parent="11" name="teachers">
+      <ObjectId>17127</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>806</StateNumber>
+    </table>
+    <table id="29" parent="11" name="timetable">
+      <ObjectId>17176</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>806</StateNumber>
+    </table>
+    <table id="30" parent="11" name="weekdays">
+      <ObjectId>17168</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>806</StateNumber>
+    </table>
+    <column id="31" parent="25" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <DefaultExpression>nextval(&apos;childage_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="32" parent="25" name="min_age">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="33" parent="25" name="max_age">
+      <Position>3</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="34" parent="25" name="childage_pkey">
+      <ObjectId>17142</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="35" parent="25" name="childage_pkey">
+      <ObjectId>17143</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>childage_pkey</UnderlyingIndexName>
+    </key>
+    <column id="36" parent="26" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <DefaultExpression>nextval(&apos;classes_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="37" parent="26" name="title">
+      <Position>2</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="38" parent="26" name="description">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="39" parent="26" name="duration">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="40" parent="26" name="subscription_price">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="41" parent="26" name="single_class_price">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="42" parent="26" name="free_first_class">
+      <Position>7</Position>
+      <DataType>boolean|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>16</TypeId>
+    </column>
+    <index id="43" parent="26" name="classes_pkey">
+      <ObjectId>17153</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="44" parent="26" name="classes_pkey">
+      <ObjectId>17154</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>classes_pkey</UnderlyingIndexName>
+    </key>
+    <column id="45" parent="27" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <DefaultExpression>nextval(&apos;locations_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="46" parent="27" name="place">
+      <Position>2</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="47" parent="27" name="metro_station">
+      <Position>3</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="48" parent="27" name="street">
+      <Position>4</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="49" parent="27" name="house_number">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="50" parent="27" name="building">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="51" parent="27" name="locations_pkey">
+      <ObjectId>17164</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="52" parent="27" name="locations_pkey">
+      <ObjectId>17165</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>locations_pkey</UnderlyingIndexName>
+    </key>
+    <column id="53" parent="28" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <DefaultExpression>nextval(&apos;teachers_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="54" parent="28" name="name">
+      <Position>2</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="55" parent="28" name="surname">
+      <Position>3</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="56" parent="28" name="patronymic">
+      <Position>4</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="57" parent="28" name="about_teacher">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <StateNumber>806</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="58" parent="28" name="teachers_pkey">
+      <ObjectId>17134</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="59" parent="28" name="teachers_pkey">
+      <ObjectId>17135</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>teachers_pkey</UnderlyingIndexName>
+    </key>
+    <column id="60" parent="29" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <DefaultExpression>nextval(&apos;timetable_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="61" parent="29" name="class">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="62" parent="29" name="teacher">
+      <Position>3</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="63" parent="29" name="age">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="64" parent="29" name="week_day">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="65" parent="29" name="start_time">
+      <Position>6</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="66" parent="29" name="end_time">
+      <Position>7</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="67" parent="29" name="location">
+      <Position>8</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="68" parent="29" name="timetable_pkey">
+      <ObjectId>17180</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="69" parent="29" name="timetable_pkey">
+      <ObjectId>17181</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>timetable_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="70" parent="29" name="fk_timetable_class_id">
+      <ObjectId>17182</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>class</ColNames>
+      <RefTableId>17146</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>classes</RefTableName>
+      <RefKeyName>classes_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+    </foreign-key>
+    <foreign-key id="71" parent="29" name="fk_timetable_teacher_id">
+      <ObjectId>17187</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>teacher</ColNames>
+      <RefTableId>17127</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>teachers</RefTableName>
+      <RefKeyName>teachers_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+    </foreign-key>
+    <foreign-key id="72" parent="29" name="fk_timetable_age_id">
+      <ObjectId>17192</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>age</ColNames>
+      <RefTableId>17138</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>childage</RefTableName>
+      <RefKeyName>childage_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+    </foreign-key>
+    <foreign-key id="73" parent="29" name="fk_timetable_week_day_id">
+      <ObjectId>17197</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>week_day</ColNames>
+      <RefTableId>17168</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>weekdays</RefTableName>
+      <RefKeyName>weekdays_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+    </foreign-key>
+    <foreign-key id="74" parent="29" name="fk_timetable_location_id">
+      <ObjectId>17202</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>location</ColNames>
+      <RefTableId>17157</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>locations</RefTableName>
+      <RefKeyName>locations_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+    </foreign-key>
+    <column id="75" parent="30" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <DefaultExpression>nextval(&apos;weekdays_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="76" parent="30" name="title">
+      <Position>2</Position>
+      <DataType>varchar(256)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>806</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="77" parent="30" name="weekdays_pkey">
+      <ObjectId>17172</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="78" parent="30" name="weekdays_pkey">
+      <ObjectId>17173</ObjectId>
+      <StateNumber>806</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>weekdays_pkey</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
