@@ -4,6 +4,7 @@ import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.IntIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 
 object Classes : IntIdTable() {
     val title = varchar("title", 256)
@@ -12,6 +13,7 @@ object Classes : IntIdTable() {
     val subscriptionPrice = integer("subscription_price").nullable()
     val singleClassPrice = integer("single_class_price")
     val freeFirstClass = bool("free_first_class")
+    val age = reference("age", ChildAges)
 }
 
 class Class(id: EntityID<Int>) : IntEntity(id) {
@@ -23,4 +25,5 @@ class Class(id: EntityID<Int>) : IntEntity(id) {
     var subscriptionPrice by Classes.subscriptionPrice
     var singleClassPrice by Classes.singleClassPrice
     var freeFirstClass by Classes.freeFirstClass
+    var age by ChildAge referencedOn Classes.age
 }

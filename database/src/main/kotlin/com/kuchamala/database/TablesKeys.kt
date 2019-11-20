@@ -5,5 +5,4 @@ enum class TablesKeys {
     Teachers,
     Timetable,
     Events,
-    Contacts
 }

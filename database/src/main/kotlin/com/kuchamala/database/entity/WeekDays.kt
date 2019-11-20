@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.IntIdTable
 
 object WeekDays : IntIdTable() {
-    val title = varchar("title", 256)
+    val title = varchar("title", 15)
 }
 
 class WeekDay(id: EntityID<Int>) : IntEntity(id) {

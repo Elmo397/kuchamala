@@ -5,14 +5,14 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.IntIdTable
 
-object ChildAge : IntIdTable() {
+object ChildAges : IntIdTable() {
     val minAge = integer("min_age").nullable()
     val maxAge = integer("max_age").nullable()
 }
 
-class ChildAgeC(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<ChildAgeC>(ChildAge)
+class ChildAge(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<ChildAge>(ChildAges)
 
-    var minAge by ChildAge.minAge
-    var maxAge by ChildAge.maxAge
+    var minAge by ChildAges.minAge
+    var maxAge by ChildAges.maxAge
 }

@@ -50,15 +50,6 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="postgres@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="postgres: database" type="162271b6:PgImplModel$Database" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
     </expand>
     <select />
   </component>
@@ -92,12 +83,12 @@
       <list>
         <option value="Kotlin Object" />
         <option value="JUnit5 Test Class" />
-        <option value="Kotlin File" />
-        <option value="Kotlin Interface" />
         <option value="AnnotationType" />
         <option value="Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -128,6 +119,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
   </component>
   <component name="RecentsManager">
@@ -222,12 +214,7 @@
     <option name="allServicesViewState">
       <serviceView>
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@808fd274" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -251,11 +238,31 @@
       <workItem from="1572257584126" duration="5103000" />
       <workItem from="1572359626164" duration="619000" />
       <workItem from="1572697329612" duration="10188000" />
-      <workItem from="1572787232219" duration="4114000" />
+      <workItem from="1572787232219" duration="4676000" />
+      <workItem from="1574155389052" duration="4056000" />
+      <workItem from="1574160985732" duration="25711000" />
+      <workItem from="1574248035085" duration="508000" />
+      <workItem from="1574248569020" duration="412000" />
+      <workItem from="1574249005621" duration="2332000" />
+      <workItem from="1574251367561" duration="10455000" />
+      <workItem from="1574262775001" duration="8384000" />
+      <workItem from="1574272755208" duration="1465000" />
+      <workItem from="1574275480649" duration="1258000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed/0.17.6/b49916e97b332518096b754d40f70e87d8e6e740/exposed-0.17.6-sources.jar!/org/jetbrains/exposed/dao/Entity.kt</url>
+          <line>246</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
