@@ -4,7 +4,6 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
 
-
 class WordPressDatabaseWriter {
     fun run(
         pageContent: String,
@@ -74,8 +73,7 @@ class WordPressDatabaseWriter {
                     "VALUES($pageContent, $pageTitle, $postExcerpt, $postStatus, $commentStatus, $pingStatus, $toPing, $pinged, $postContentFiltered, $postType)"
 
             val statement = connection.createStatement()
-            val resultSet = statement.executeUpdate(query)
-
+            statement.executeUpdate(query)
             statement.close()
         } catch (e: Exception) {
             e.printStackTrace()
