@@ -10,9 +10,9 @@ object TeacherClasses  : IntIdTable() {
     val clazz = reference("class", Classes)
 }
 
-class TeacherClass (id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<TeacherClass>(TeacherClasses)
+class TeacherClassEntity (id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<TeacherClassEntity>(TeacherClasses)
 
-    var teacher by Teacher referencedOn TeacherClasses.teacher
-    var clazz by Class referencedOn TeacherClasses.clazz
+    var teacher by TeacherEntity referencedOn TeacherClasses.teacher
+    var clazz by ClassEntity referencedOn TeacherClasses.clazz
 }

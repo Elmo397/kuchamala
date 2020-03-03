@@ -1,13 +1,10 @@
 package com.kuchamala.database.transactions
 
 import com.kuchamala.database.entity.*
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
-import java.time.LocalTime
 
 fun addClass(
     title: String,
@@ -16,14 +13,14 @@ fun addClass(
     subscriptionPrice: Int?,
     singleClassPrice: Int,
     freeFirstClass: Boolean,
-    age: ChildAge
-): Class? {
-    var result: Class? = null
+    age: ChildAgeEntity
+): ClassEntity? {
+    var result: ClassEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = Class.new {
+        result = ClassEntity.new {
             this.title = title
             this.description = description
             this.duration = duration
@@ -44,13 +41,13 @@ fun addTeacher(
     surname: String,
     patronymic: String?,
     aboutTeacher: String?
-): Teacher? {
-    var result: Teacher? = null
+): TeacherEntity? {
+    var result: TeacherEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = Teacher.new {
+        result = TeacherEntity.new {
             this.name = name
             this.surname = surname
             this.patronymic = patronymic
@@ -66,13 +63,13 @@ fun addTeacher(
 fun addChildAge(
     minAge: Int?,
     maxAge: Int?
-): ChildAge? {
-    var result: ChildAge? = null
+): ChildAgeEntity? {
+    var result: ChildAgeEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = ChildAge.new {
+        result = ChildAgeEntity.new {
             this.minAge = minAge
             this.maxAge = maxAge
         }
@@ -89,13 +86,13 @@ fun addLocation(
     street: String?,
     houseNumber: Int?,
     building: Int?
-): Location? {
-    var result: Location? = null
+): LocationEntity? {
+    var result: LocationEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = Location.new {
+        result = LocationEntity.new {
             this.place = place
             this.metroStation = metroStation
             this.street = street
@@ -109,13 +106,13 @@ fun addLocation(
     return result
 }
 
-fun addWeekDay(title: String): WeekDay? {
-    var result: WeekDay? = null
+fun addWeekDay(title: String): WeekDayEntity? {
+    var result: WeekDayEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = WeekDay.new {
+        result = WeekDayEntity.new {
             this.title = title
         }
 
@@ -126,15 +123,15 @@ fun addWeekDay(title: String): WeekDay? {
 }
 
 fun addTeacherClasses(
-    teacher: Teacher,
-    clazz: Class
-): TeacherClass? {
-    var result: TeacherClass? = null
+    teacher: TeacherEntity,
+    clazz: ClassEntity
+): TeacherClassEntity? {
+    var result: TeacherClassEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = TeacherClass.new {
+        result = TeacherClassEntity.new {
             this.teacher = teacher
             this.clazz = clazz
         }
@@ -146,20 +143,20 @@ fun addTeacherClasses(
 }
 
 fun addTimetable(
-    clazz: Class,
-    teacher: Teacher,
-    age: ChildAge,
-    weekDay: WeekDay,
+    clazz: ClassEntity,
+    teacher: TeacherEntity,
+    age: ChildAgeEntity,
+    weekDay: WeekDayEntity,
     startTime: DateTime,
     endTime: DateTime,
-    location: Location
-): TimetableC? {
-    var result: TimetableC? = null
+    location: LocationEntity
+): TimetableEntity? {
+    var result: TimetableEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = TimetableC.new {
+        result = TimetableEntity.new {
             this.clazz = clazz
             this.teacher = teacher
             this.age = age
@@ -184,13 +181,13 @@ fun addEvent(
     place: String,
     address: String,
     price: Int
-): Event? {
-    var result: Event? = null
+): EventEntity? {
+    var result: EventEntity? = null
 
     transaction {
         addLogger(StdOutSqlLogger)
 
-        result = Event.new {
+        result = EventEntity.new {
             this.title = title
             this.eventDetails = eventDetails
             this.dateTimeStart = dateTimeStart

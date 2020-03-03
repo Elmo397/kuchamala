@@ -15,14 +15,14 @@ object Timetable : IntIdTable() {
     val location = reference("location", Locations)
 }
 
-class TimetableC(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<TimetableC>(Timetable)
+class TimetableEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<TimetableEntity>(Timetable)
 
-    var clazz by Class referencedOn Timetable.clazz
-    var teacher by Teacher referencedOn Timetable.teacher
-    var age by ChildAge referencedOn Timetable.age
-    var weekDay by WeekDay referencedOn Timetable.weekDay
+    var clazz by ClassEntity referencedOn Timetable.clazz
+    var teacher by TeacherEntity referencedOn Timetable.teacher
+    var age by ChildAgeEntity referencedOn Timetable.age
+    var weekDay by WeekDayEntity referencedOn Timetable.weekDay
     var startTime by Timetable.startTime
     var endTime by Timetable.endTime
-    var location by Location referencedOn Timetable.location
+    var location by LocationEntity referencedOn Timetable.location
 }

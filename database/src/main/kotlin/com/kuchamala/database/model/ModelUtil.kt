@@ -1,12 +1,12 @@
 package com.kuchamala.database.model
 
-import com.kuchamala.database.entity.Teacher
+import com.kuchamala.database.entity.TeacherEntity
 import com.kuchamala.database.entity.Teachers
 import com.kuchamala.database.transactions.findTeacher
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 
-fun getTeacher(items: List<String>): Teacher? {
+fun getTeacher(items: List<String>): TeacherEntity? {
     var name = items[0]
     var surname = items[1]
     var teacherOp = (Teachers.name eq name) and (Teachers.surname eq surname)

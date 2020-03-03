@@ -13,8 +13,8 @@ object Locations : IntIdTable() {
     val building = integer("building").nullable()
 }
 
-class Location(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<Location>(Locations)
+class LocationEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<LocationEntity>(Locations)
 
     var place by Locations.place
     var metroStation by Locations.metroStation

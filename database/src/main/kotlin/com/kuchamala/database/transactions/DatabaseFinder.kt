@@ -4,81 +4,81 @@ import com.kuchamala.database.entity.*
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.transactions.transaction
 
-fun findChildAges(op: Op<Boolean>): ChildAge? {
-    var found: ChildAge? = null
+fun findChildAges(op: Op<Boolean>): ChildAgeEntity? {
+    var found: ChildAgeEntity? = null
 
     transaction {
-        found = ChildAge.find { op }.singleOrNull()
+        found = ChildAgeEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findClass(op: Op<Boolean>): Class? {
-    var found: Class? = null
+fun findClass(op: Op<Boolean>): ClassEntity? {
+    var found: ClassEntity? = null
 
     transaction {
-        found = Class.find { op }.singleOrNull()
+        found = ClassEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findEvent(op: Op<Boolean>): Event? {
-    var found: Event? = null
+fun findEvent(op: Op<Boolean>): EventEntity? {
+    var found: EventEntity? = null
 
     transaction {
-        found = Event.find { op }.singleOrNull()
+        found = EventEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findLocation(op: Op<Boolean>): Location? {
-    var found: Location? = null
+fun findLocation(op: Op<Boolean>): LocationEntity? {
+    var found: LocationEntity? = null
 
     transaction {
-        found = Location.find { op }.singleOrNull()
+        found = LocationEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findTeacherClass(op: Op<Boolean>): TeacherClass? {
-    var found: TeacherClass? = null
+fun findTeacherClass(op: Op<Boolean>): TeacherClassEntity? {
+    var found: TeacherClassEntity? = null
 
     transaction {
-        found = TeacherClass.find { op }.singleOrNull()
+        found = TeacherClassEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findTeacher(op: Op<Boolean>): Teacher? {
-    var found: Teacher? = null
+fun findTeacher(op: Op<Boolean>): TeacherEntity? {
+    var found: TeacherEntity? = null
 
     transaction {
-        found = Teacher.find { op }.singleOrNull()
+        found = TeacherEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findTimetable(op: Op<Boolean>): TimetableC? {
-    var found: TimetableC? = null
+fun findTimetable(op: Op<Boolean>): TimetableEntity? {
+    var found: TimetableEntity? = null
 
     transaction {
-        found = TimetableC.find { op }.singleOrNull()
+        found = TimetableEntity.find { op }.singleOrNull()
     }
 
     return found
 }
 
-fun findWeekDay(op: Op<Boolean>): WeekDay? {
-    var found: WeekDay? = null
+fun findWeekDay(op: Op<Boolean>): WeekDayEntity? {
+    var found: WeekDayEntity? = null
 
     transaction {
-        found = WeekDay.find { op }.singleOrNull()
+        found = WeekDayEntity.find { op }.singleOrNull()
     }
 
     return found

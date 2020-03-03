@@ -16,8 +16,8 @@ object Events : IntIdTable() {
     val price = integer("price")
 }
 
-class Event(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<Event>(Events)
+class EventEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<EventEntity>(Events)
 
     var title by Events.title
     var eventDetails by Events.eventDetails

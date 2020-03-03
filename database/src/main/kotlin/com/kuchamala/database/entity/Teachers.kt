@@ -12,8 +12,8 @@ object Teachers : IntIdTable() {
     val aboutTeacher = text("about_teacher").nullable()
 }
 
-class Teacher(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<Teacher>(Teachers)
+class TeacherEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<TeacherEntity>(Teachers)
 
     var name by Teachers.name
     var surname by Teachers.surname

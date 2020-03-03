@@ -10,8 +10,8 @@ object ChildAges : IntIdTable() {
     val maxAge = integer("max_age").nullable()
 }
 
-class ChildAge(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<ChildAge>(ChildAges)
+class ChildAgeEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<ChildAgeEntity>(ChildAges)
 
     var minAge by ChildAges.minAge
     var maxAge by ChildAges.maxAge

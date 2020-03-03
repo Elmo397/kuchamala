@@ -9,8 +9,8 @@ object WeekDays : IntIdTable() {
     val title = varchar("title", 15)
 }
 
-class WeekDay(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<WeekDay>(WeekDays)
+class WeekDayEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<WeekDayEntity>(WeekDays)
 
     var title by WeekDays.title
 }
