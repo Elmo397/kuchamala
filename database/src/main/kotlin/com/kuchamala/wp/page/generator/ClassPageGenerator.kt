@@ -4,7 +4,7 @@ import com.kuchamala.database.model.ClassesModel
 import com.kuchamala.database.model.TeacherClassesModel
 
 fun main() {
-    println(ClassPageGenerator().page())
+    println(ClassPageGenerator().demoPage())
 }
 
 class ClassPageGenerator {
@@ -30,23 +30,26 @@ class ClassPageGenerator {
         """.trimIndent().trim()
     }
 
-    fun formRow(formId: Int): String {
-        return row("f5f5f5", false, false, "form", false) {
+    fun formRow(formId: Int, isLeft: Boolean): String {
+        return row(if (isLeft) "ffffff" else "f5f5f5", false, false, "form", false) {
             """
             [vc_column width="1/4"][/vc_column][vc_column width="1/2"][contact-form-7 id="$formId"][/vc_column][vc_column width="1/4"][/vc_column]
         """.trimIndent()
         }
     }
 
-    fun teacherRow(teacherHtml: String, teacherName: String, imageId: Int): String {
-        return row("ffffff", true, false, null, false) {
-            """
-            [vc_column width="1/2" el_wrapper_class="column-height"]${image(imageId)}[/vc_column][vc_column width="1/2" el_wrapper_class="column-height"][fildisi_title]Педагог: ${teacherName}[/fildisi_title][vc_column_text css=".vc_custom_1573293625443{margin-bottom: 30px !important;}"]$teacherHtml[/vc_column_text][fildisi_empty_space][fildisi_empty_space height_multiplier="3x"][/vc_column]
-        """.trimIndent()
+    fun teacherRow(teacherHtml: String, teacherName: String, imageId: Int, isLeft: Boolean): String {
+        val imageColumn = """[vc_column width="1/2" el_wrapper_class="column-height"]${image(imageId)}[/vc_column]"""
+        val teacherColumn = """[vc_column width="1/2" el_wrapper_class="column-height"][fildisi_title]Педагог: ${teacherName}[/fildisi_title][vc_column_text css=".vc_custom_1573293625443{margin-bottom: 30px !important;}"]$teacherHtml[/vc_column_text][fildisi_empty_space][fildisi_empty_space height_multiplier="3x"][/vc_column]"""
+        val columns: String  =
+            if (isLeft) "$imageColumn$teacherColumn"
+            else "$teacherColumn$imageColumn"
+        return row(if (isLeft) "ffffff" else "f5f5f5", true, false, null, false) {
+            columns
         }
     }
 
-    fun descriptionRow(descriptionText: String, title: String?, imageLeft: Boolean, imageId: Int): String {
+    fun descriptionRow(descriptionText: String, title: String?, isLeft: Boolean, imageId: Int): String {
         val titleString =
             if (title != null) """[fildisi_title heading_tag="h2"]$title[/fildisi_title]"""
             else ""
@@ -54,7 +57,7 @@ class ClassPageGenerator {
         val textColumn = """[vc_column width="1/2" tablet_sm_width="1" el_wrapper_class="column-height"]$titleString[vc_column_text css=".vc_custom_1552745539215{margin-bottom: 30px !important;}"]$descriptionText[/vc_column_text][/vc_column]"""
 
         val columns =
-            if (imageLeft)
+            if (isLeft)
                 """
                     $imageColumn$textColumn
                 """.trimIndent().trim()
@@ -63,12 +66,12 @@ class ClassPageGenerator {
                     $textColumn$imageColumn
                 """.trimIndent().trim()
 
-        return row(if (imageLeft) "ffffff" else "f5f5f5", true, false, "description", false) {
+        return row(if (isLeft) "ffffff" else "f5f5f5", true, false, "description", false) {
             columns
         }
     }
 
-    fun headerRow(title: String, textHtml: String): String {
+    fun headerRow(title: String, textHtml: String, imageId: Int): String {
         val buttons: String =
             """
                 <span style="display: inline !important; float: none; background-color: #ffffff; color: #333333; cursor: text; font-family: Georgia,'Times New Roman','Bitstream Charter',Times,serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;">[sc name="join-button"][sc name="more-button"]</span>
@@ -76,7 +79,7 @@ class ClassPageGenerator {
 
         return row("f5f5f5", true, true, null, false) {
             """
-            [vc_column width="1/2" tablet_sm_width="1"][fildisi_title heading_tag="h1"]${title}[/fildisi_title][vc_column_text css=".vc_custom_1552807612682{margin-bottom: 20px !important;}"]$textHtml[/vc_column_text]$buttons[/vc_column][vc_column width="1/2" tablet_sm_width="1"]${image(509)}[/vc_column]
+            [vc_column width="1/2" tablet_sm_width="1"][fildisi_title heading_tag="h1"]${title}[/fildisi_title][vc_column_text css=".vc_custom_1552807612682{margin-bottom: 20px !important;}"]$textHtml[/vc_column_text]$buttons[/vc_column][vc_column width="1/2" tablet_sm_width="1"]${image(imageId)}[/vc_column]
         """.trimIndent().trim()
         }
     }
@@ -129,11 +132,25 @@ class ClassPageGenerator {
 
         val teacherName: String = "Варвара Феоктистова"
 
-        return headerRow(title, timetableAndPrice) +
+        return headerRow(title, timetableAndPrice, 509) +
                 descriptionRow(description1Text, descriptionTitle, true,491) +
                 descriptionRow(description2Text, null, false, 2633) +
-                teacherRow(teacherHtml, teacherName, 3135) +
-                formRow(266)
+                teacherRow(teacherHtml, teacherName, 3135, true) +
+                formRow(266, false)
+    }
+
+    fun demoPage(): String {
+        val timetableAndPrice: String =
+            """
+                Первое занятие — бесплатное. Абонемент — TBD руб/зан. Занятия проходят <a href="http://www.kuchamala.ru/contact/">недалеко</a> от ст. м. Озерки.
+            <h4>Расписание:</h4>
+            TBD
+            """.trimIndent().trim()
+
+        return headerRow("Театральное мастерство", timetableAndPrice, 3433) +
+                descriptionRow("TBD", "Театр для детей", true,3433) +
+                teacherRow("TBD", "TBD", 3433, false) +
+                formRow(266, true)
     }
 
     private var rowNumberFlag = 0 // flag for background color in rows
