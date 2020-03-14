@@ -7,7 +7,7 @@ import java.util.*
 class WordPressDatabaseWriter {
     fun run(
         pageContent: String,
-        pageTitle: String,
+        postTitle: String,
         postExcerpt: String,
         postStatus: String,
         commentStatus: String,
@@ -15,6 +15,7 @@ class WordPressDatabaseWriter {
         toPing: String,
         pinged: String,
         postContentFiltered: String,
+        guid: String,
         postType: String
     ) {
         val connection = connectToDatabase()
@@ -22,7 +23,7 @@ class WordPressDatabaseWriter {
         insertPage(
             connection!!,
             pageContent,
-            pageTitle,
+            postTitle,
             postExcerpt,
             postStatus,
             commentStatus,
@@ -30,6 +31,7 @@ class WordPressDatabaseWriter {
             toPing,
             pinged,
             postContentFiltered,
+            guid,
             postType
         )
     }
@@ -57,7 +59,7 @@ class WordPressDatabaseWriter {
     private fun insertPage(
         connection: Connection,
         pageContent: String,
-        pageTitle: String,
+        postTitle: String,
         postExcerpt: String,
         postStatus: String,
         commentStatus: String,
@@ -65,12 +67,13 @@ class WordPressDatabaseWriter {
         toPing: String,
         pinged: String,
         postContentFiltered: String,
+        guid: String,
         postType: String
     ) {
         try {
             val query = "INSERT INTO " +
-                    "wp_posts(post_content, post_title, post_excerpt, post_status, comment_status, ping_status, to_ping, pinged, post_content_filtered, post_type) " +
-                    "VALUES($pageContent, $pageTitle, $postExcerpt, $postStatus, $commentStatus, $pingStatus, $toPing, $pinged, $postContentFiltered, $postType)"
+                    "wp_posts(post_content, post_title, post_excerpt, post_status, comment_status, ping_status, to_ping, pinged, post_content_filtered, guid, post_type) " +
+                    "VALUES(\"$pageContent\", '$postTitle', '$postExcerpt', '$postStatus', '$commentStatus', '$pingStatus', '$toPing', '$pinged', '$postContentFiltered', '$guid', '$postType')"
 
             val statement = connection.createStatement()
             statement.executeUpdate(query)

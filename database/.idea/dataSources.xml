@@ -10,11 +10,5 @@
         <property name="serverTimezone" value="Europe/Moscow" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="dd709f37-182d-434b-9a7f-8d29ca1325df">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
-    </data-source>
   </component>
 </project>
