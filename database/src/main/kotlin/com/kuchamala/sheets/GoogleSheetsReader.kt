@@ -18,7 +18,8 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
 
         return ClassData(
             getHeaderTitle(service, classListTitle),
-            getHeaderText(service, classListTitle),
+            getPriceText(service, classListTitle),
+            getTimetableText(service, classListTitle),
             getImage(service, classListTitle, "D2"),
             getDescriptions(service, classListTitle),
             getTeachers(service, classListTitle),
@@ -33,8 +34,15 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
         return response.getValues()[0][0].toString()
     }
 
-    private fun getHeaderText(service: Sheets, classListTitle: String): String {
+    private fun getPriceText(service: Sheets, classListTitle: String): String {
         val range = "$classListTitle!C2"
+        val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
+
+        return response.getValues()[0][0].toString()
+    }
+
+    private fun getTimetableText(service: Sheets, classListTitle: String): String {
+        val range = "$classListTitle!C3"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
 
         return response.getValues()[0][0].toString()
@@ -45,7 +53,7 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
         val titleRange = "$classListTitle!B"
         val textRange = "$classListTitle!C"
 
-        for (rowNumb in 3..7) {
+        for (rowNumb in 4..8) {
             var title: String? = null
             val titleRow = service.spreadsheets().values()
                 .get(spreadsheetId, "$titleRange$rowNumb")
@@ -76,7 +84,7 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
         val textRange = "$classListTitle!C"
         val spreadsheets = service.spreadsheets().values()
 
-        for (rowNumb in 8..12) {
+        for (rowNumb in 9..13) {
             val nameRow = spreadsheets.get(spreadsheetId, "$nameRange$rowNumb").execute().getValues()
             if (nameRow != null) {
                 val image = getImage(service, classListTitle, "D$rowNumb")
@@ -99,7 +107,7 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
     }
 
     private fun getFormId(service: Sheets, classListTitle: String): Form {
-        val range = "$classListTitle!B13"
+        val range = "$classListTitle!B14"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
         val id = response.getValues()[0][0].toString().toInt()
 

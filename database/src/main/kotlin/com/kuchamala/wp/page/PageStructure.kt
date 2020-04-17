@@ -2,7 +2,8 @@ package com.kuchamala.wp.page
 
 data class ClassData(
     val title: String,
-    val timetableAndPrice: String,
+    val price: String,
+    val timetable: String,
     val image: Image,
     val descriptions: List<Description>,
     val teachers: List<Teacher>,
