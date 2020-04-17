@@ -15,7 +15,7 @@ class WordPressDatabaseWriter {
         toPing: String,
         pinged: String,
         postContentFiltered: String,
-        guid: String,
+        postName: String,
         postType: String
     ) {
         val connection = connectToDatabase()
@@ -31,7 +31,7 @@ class WordPressDatabaseWriter {
             toPing,
             pinged,
             postContentFiltered,
-            guid,
+            postName,
             postType
         )
     }
@@ -67,13 +67,13 @@ class WordPressDatabaseWriter {
         toPing: String,
         pinged: String,
         postContentFiltered: String,
-        guid: String,
+        postName: String,
         postType: String
     ) {
         try {
             val query = "INSERT INTO " +
-                    "wp_posts(post_content, post_title, post_excerpt, post_status, comment_status, ping_status, to_ping, pinged, post_content_filtered, guid, post_type) " +
-                    "VALUES(\"$pageContent\", '$postTitle', '$postExcerpt', '$postStatus', '$commentStatus', '$pingStatus', '$toPing', '$pinged', '$postContentFiltered', '$guid', '$postType')"
+                    "wp_posts(post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_name, to_ping, pinged, post_content_filtered, post_type) " +
+                    "VALUES(\"$pageContent\", '$postTitle', '$postExcerpt', '$postStatus', '$commentStatus', '$pingStatus', '$postName','$toPing', '$pinged', '$postContentFiltered', '$postType')"
 
             val statement = connection.createStatement()
             statement.executeUpdate(query)

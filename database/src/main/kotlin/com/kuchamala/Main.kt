@@ -11,11 +11,53 @@ fun main() {
     val httpTransport: NetHttpTransport = GoogleNetHttpTransport.newTrustedTransport()
     val credential = GoogleAuthorization().getCredentials(httpTransport)
 
-    createMathClassPage(httpTransport, credential)
+    createEmptyClassPage(httpTransport, credential)
+//    createMathClassPage(httpTransport, credential)
+}
+
+private fun createEmptyClassPage(httpTransport: NetHttpTransport, credential: Credential) {
+    val page = createPage(httpTransport, credential, "EmptyClass")
+    val nameForUrl = "classes-empty"
+    val pageStatus = "draft"
+
+    println(page)
+    WordPressDatabaseWriter().run(
+        pageContent = page,
+        postTitle = "",
+        postExcerpt = "",
+        postStatus = pageStatus,
+        commentStatus = "closed",
+        pingStatus = "closed",
+        toPing = "",
+        pinged = "",
+        postContentFiltered = "",
+        postName = nameForUrl,
+        postType = "page"
+    )
 }
 
 private fun createMathClassPage(httpTransport: NetHttpTransport, credential: Credential) {
-    val data = GoogleSheetsReader(httpTransport, credential).run("Математика")
+    val page = createPage(httpTransport, credential, "Математика")
+    val nameForUrl = "classes-math"
+    val pageStatus = "draft"
+
+    WordPressDatabaseWriter().run(
+        pageContent = page,
+        postTitle = "",
+        postExcerpt = "",
+        postStatus = pageStatus,
+        commentStatus = "closed",
+        pingStatus = "closed",
+        toPing = "",
+        pinged = "",
+        postContentFiltered = "",
+        postName = nameForUrl,
+        postType = "page"
+    )
+}
+
+private fun createPage(httpTransport: NetHttpTransport, credential: Credential, classTitle: String): String {
+    val data = GoogleSheetsReader(httpTransport, credential).run(classTitle)
 
     var isLeft = true
     var descriptionRow = ""
@@ -33,20 +75,5 @@ private fun createMathClassPage(httpTransport: NetHttpTransport, credential: Cre
     val headerRow = createHeaderRow(data.title, data.timetableAndPrice, data.image)
     val formRow = createFormRow(data.form, isLeft)
 
-    val page = "$headerRow$descriptionRow$teacherRow$formRow".replace("\"", "\\\"")
-    val url = "http://kuchamala.ru/classes-math"
-
-    WordPressDatabaseWriter().run(
-        pageContent = page,
-        postTitle = "",
-        postExcerpt = "",
-        postStatus = "draft",
-        commentStatus = "closed",
-        pingStatus = "closed",
-        toPing = "",
-        pinged = "",
-        postContentFiltered = "",
-        guid = url,
-        postType = "page"
-    )
+    return "$headerRow$descriptionRow$teacherRow$formRow".replace("\"", "\\\"")
 }
