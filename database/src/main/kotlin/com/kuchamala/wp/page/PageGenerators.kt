@@ -5,6 +5,24 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.kuchamala.sheets.GoogleAuthorization
 import com.kuchamala.sheets.GoogleSheetsReader
 
+fun createWordpressPage(tabName: String, className: String, url: String, pageStatus: String = "draft") {
+    val page = createPage(tabName, className)
+
+    insertPost(
+            pageContent = page,
+            postTitle = "",
+            postExcerpt = "",
+            postStatus = pageStatus,
+            commentStatus = "closed",
+            pingStatus = "closed",
+            toPing = "",
+            pinged = "",
+            postContentFiltered = "",
+            postName = url,
+            postType = "page"
+    )
+}
+
 fun createEmptyClassPage() {
     val page = createPage("EmptyClass", "empty")
     val nameForUrl = "classes-empty"
