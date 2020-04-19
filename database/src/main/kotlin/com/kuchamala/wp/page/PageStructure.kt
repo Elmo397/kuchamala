@@ -1,5 +1,22 @@
 package com.kuchamala.wp.page
 
+data class AllClassesPage(
+    val title: String,
+    val text: String,
+    val classesPreview: List<ClassPreview>,
+    val image: Image
+)
+
+data class ClassPreview(
+    val title: String,
+    val description: String,
+    val duration: Int,
+    val minAge: Int,
+    val maxAge: Int,
+    val url: String,
+    val image: Image
+)
+
 data class ClassData(
     val title: String,
     val price: String,

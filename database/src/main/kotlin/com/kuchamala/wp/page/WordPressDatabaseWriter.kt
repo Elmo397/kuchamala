@@ -19,12 +19,22 @@ fun insertPost(
 ) {
     try {
         val connection = connectToDatabase()
-        val query = "INSERT INTO " +
+        val statement = connection!!.createStatement()
+
+        val postQuery = "INSERT INTO " +
                 "wp_posts(post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_name, to_ping, pinged, post_content_filtered, post_type) " +
                 "VALUES(\"$pageContent\", '$postTitle', '$postExcerpt', '$postStatus', '$commentStatus', '$pingStatus', '$postName','$toPing', '$pinged', '$postContentFiltered', '$postType')"
+        statement.executeUpdate(postQuery)
 
-        val statement = connection!!.createStatement()
-        statement.executeUpdate(query)
+        val selectQuery = "select * from wp_posts ORDER BY id DESC LIMIT 1;"
+        val result = statement.executeQuery(selectQuery)
+        if (result.next()) {
+            val postId = result.getInt("ID")
+            val metaQuery = """INSERT INTO wp_postmeta(post_id, meta_key, meta_value) VALUES($postId, '_fildisi_eutf_disable_title', 'yes')"""
+
+            statement.executeUpdate(metaQuery)
+        }
+
         statement.close()
     } catch (e: Exception) {
         e.printStackTrace()

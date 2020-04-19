@@ -5,12 +5,12 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.kuchamala.sheets.GoogleAuthorization
 import com.kuchamala.sheets.GoogleSheetsReader
 
-fun createWordpressPage(tabName: String, className: String, url: String, pageStatus: String = "draft") {
-    val page = createPage(tabName, className)
+fun createWordpressPage(tabName: String, url: String, pageStatus: String = "draft") {
+    val page = createPage(tabName)
 
     insertPost(
             pageContent = page,
-            postTitle = "",
+            postTitle = tabName,
             postExcerpt = "",
             postStatus = pageStatus,
             commentStatus = "closed",
@@ -23,7 +23,7 @@ fun createWordpressPage(tabName: String, className: String, url: String, pageSta
     )
 }
 
-private fun createPage(classTitle: String, className: String): String {
+private fun createPage(classTitle: String): String {
     val httpTransport: NetHttpTransport = GoogleNetHttpTransport.newTrustedTransport()
     val credential = GoogleAuthorization().getCredentials(httpTransport)
     val data = GoogleSheetsReader(httpTransport, credential).run(classTitle)
@@ -50,20 +50,4 @@ private fun createPage(classTitle: String, className: String): String {
     val formRow = createFormRow(data.form, isLeft)
 
     return "$headerRow$descriptionRow$teacherRow$formRow".replace("\"", "\\\"")
-}
-
-private fun createTextBlocks(content: String, title: String, status: String, name: String) {
-    insertPost(
-        pageContent = content,
-        postTitle = title,
-        postExcerpt = "",
-        postStatus = status,
-        commentStatus = "closed",
-        pingStatus = "closed",
-        toPing = "",
-        pinged = "",
-        postContentFiltered = "",
-        postName = name,
-        postType = "text-blocks"
-    )
 }
