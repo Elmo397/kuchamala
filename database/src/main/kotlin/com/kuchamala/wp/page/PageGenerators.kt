@@ -23,60 +23,15 @@ fun createWordpressPage(tabName: String, className: String, url: String, pageSta
     )
 }
 
-fun createEmptyClassPage() {
-    val page = createPage("EmptyClass", "empty")
-    val nameForUrl = "classes-empty"
-    val pageStatus = "draft"
-
-    insertPost(
-        pageContent = page,
-        postTitle = "",
-        postExcerpt = "",
-        postStatus = pageStatus,
-        commentStatus = "closed",
-        pingStatus = "closed",
-        toPing = "",
-        pinged = "",
-        postContentFiltered = "",
-        postName = nameForUrl,
-        postType = "page"
-    )
-}
-
-fun createMathClassPage() {
-    val page = createPage("Математика", "math")
-    val nameForUrl = "classes-math"
-    val pageStatus = "draft"
-
-    insertPost(
-        pageContent = page,
-        postTitle = "",
-        postExcerpt = "",
-        postStatus = pageStatus,
-        commentStatus = "closed",
-        pingStatus = "closed",
-        toPing = "",
-        pinged = "",
-        postContentFiltered = "",
-        postName = nameForUrl,
-        postType = "page"
-    )
-}
-
 private fun createPage(classTitle: String, className: String): String {
     val httpTransport: NetHttpTransport = GoogleNetHttpTransport.newTrustedTransport()
     val credential = GoogleAuthorization().getCredentials(httpTransport)
     val data = GoogleSheetsReader(httpTransport, credential).run(classTitle)
 
-    val priceId = "$className-price"
-    val timetableId = "$className-timetable"
-
-    createTextBlocks(data.price.replace("\"", "\\\""), priceId, "publish", priceId)
-    createTextBlocks(data.timetable.replace("\"", "\\\""), timetableId, "publish", timetableId)
-
-    val timetableAndPrice = """[text-blocks id="$priceId"]
+    val timetableAndPrice = """${data.price}
                                 |<h4>Расписание:</h4>
-                                |[text-blocks id="$timetableId"]""".trimMargin()
+                                |${data.timetable}
+                                |""".trimMargin()
 
     var isLeft = true
     var descriptionRow = ""

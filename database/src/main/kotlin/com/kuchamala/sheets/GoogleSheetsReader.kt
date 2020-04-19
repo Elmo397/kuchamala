@@ -60,7 +60,7 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
                 .execute().getValues()
 
             if(titleRow != null) {
-                title = titleRow[0].toString()
+                title = titleRow[0][0].toString()
             }
 
             val textRow = service.spreadsheets().values()
@@ -68,7 +68,7 @@ class GoogleSheetsReader(private val httpTransport: NetHttpTransport, private va
                 .execute().getValues()
 
             if (textRow != null) {
-                val text = textRow[0].toString()
+                val text = textRow[0][0].toString()
                 val image = getImage(service, classListTitle, "D$rowNumb")
 
                 descriptions.add(Description(title,text, image))

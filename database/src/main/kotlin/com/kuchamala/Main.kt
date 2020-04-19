@@ -6,6 +6,7 @@ fun main() {
     createWordpressPage("Фокусы Онлайн", "online-focuses", "classes-online-focuses")
     createWordpressPage("Математика Онлайн", "online-math", "classes-online-math")
     createWordpressPage("Танцы Онлайн", "online-dance", "classes-online-dance")
+    Thread.sleep(5000)
     createWordpressPage("Театр Онлайн", "online-theatre", "classes-online-theatre")
     createWordpressPage("Английский Онлайн", "online-english", "classes-online-english")
     createWordpressPage("Олимпиадная Математика Онлайн", "online-olympiad-math", "classes-online-olympiad-math")
