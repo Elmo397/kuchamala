@@ -1,9 +1,7 @@
 package com.kuchamala.wp.database
 
-import java.sql.Connection
-import java.sql.DriverManager
+import java.sql.ResultSet
 import java.sql.Statement
-import java.util.*
 
 fun writeToDatabase(
     postContent: String,
@@ -23,7 +21,8 @@ fun writeToDatabase(
         val statement = connection!!.createStatement()
         val found = findPage(statement, postTitle, postStatus)
 
-        if (found) {
+        if (found.next()) {
+            insertRevision(statement, found, postContent)
             updatePage(statement, postContent, postTitle, postStatus)
         } else {
             insertPage(
@@ -62,9 +61,11 @@ private fun insertPage(
     postContentFiltered: String,
     postType: String
 ) {
-    val postQuery = "INSERT INTO " +
-            "wp_posts(post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_name, to_ping, pinged, post_content_filtered, post_type) " +
-            "VALUES(\"$postContent\", '$postTitle', '$postExcerpt', '$postStatus', '$commentStatus', '$pingStatus', '$postName','$toPing', '$pinged', '$postContentFiltered', '$postType')"
+    val guid = "https\\://www.kuchamala.ru/$postName/"
+    val columns = "post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_name, to_ping, pinged, post_content_filtered, guid, post_type"
+    val values = "\"$postContent\", '$postTitle', '$postExcerpt', '$postStatus', '$commentStatus', '$pingStatus', '$postName','$toPing', '$pinged', '$postContentFiltered', '$guid', '$postType'"
+
+    val postQuery = "INSERT INTO wp_posts($columns) VALUES($values)"
     statement.executeUpdate(postQuery)
 
     val selectQuery = "select * from wp_posts ORDER BY id DESC LIMIT 1;"
@@ -78,14 +79,35 @@ private fun insertPage(
     }
 }
 
+private fun insertRevision(statement: Statement, post: ResultSet, newContent: String) {
+    val postId = post.getInt("ID")
+    val columns = "post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_name, to_ping, pinged, post_content_filtered, post_parent, guid, post_type"
+    val values = "\"$newContent\", " +
+            "'${post.getString("post_title")}', " +
+            "'${post.getString("post_excerpt")}', " +
+            "'inherit', " +
+            "'${post.getString("comment_status")}', " +
+            "'${post.getString("ping_status")}', " +
+            "'$postId-revision-v1', " +
+            "'${post.getString("to_ping")}', " +
+            "'${post.getString("pinged")}', " +
+            "'${post.getString("post_content_filtered")}', " +
+            "'$postId', " +
+            "'https\\://www.kuchamala.ru/$postId-revision-v1/', " +
+            "'revision'"
+
+    val query = "INSERT INTO wp_posts($columns) VALUES($values)"
+    statement.executeUpdate(query)
+}
+
 private fun updatePage(statement: Statement, postContent: String, postTitle: String, postStatus: String) {
     val query = "update wp_posts " +
-            "set post_content='$postContent' " +
+            "set post_content=\"$postContent\" " +
             "where post_title='$postTitle' and post_status='$postStatus';"
     statement.executeUpdate(query)
 }
 
-private fun findPage(statement: Statement, postTitle: String, postStatus: String): Boolean {
+private fun findPage(statement: Statement, postTitle: String, postStatus: String): ResultSet {
     val query = "select * from wp_posts where post_title='$postTitle' and post_status='$postStatus';"
-    return statement.executeQuery(query).next()
+    return statement.executeQuery(query)
 }

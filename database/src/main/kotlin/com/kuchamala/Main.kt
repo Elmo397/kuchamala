@@ -3,7 +3,8 @@ package com.kuchamala
 import com.kuchamala.wp.page.*
 
 fun main() {
-    createAllClassesPage()
+    createClassPage("EmptyClass", "classes-empty")
+//    createAllClassesPage()
 }
 
 private fun createClassesPages() {
