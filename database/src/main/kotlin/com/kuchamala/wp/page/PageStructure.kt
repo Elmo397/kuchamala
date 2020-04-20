@@ -13,7 +13,7 @@ data class ClassPreview(
     val duration: Int,
     val minAge: Int,
     val maxAge: Int,
-    val url: String,
+    val className: String,
     val image: Image
 )
 

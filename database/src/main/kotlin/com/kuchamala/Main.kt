@@ -24,7 +24,7 @@ private fun createAllClassesPage() {
         duration = 60,
         minAge = 1,
         maxAge = 3,
-        url = "https://www.kuchamala.ru/classes-kolobok/",
+        className = "classes-kolobok",
         image = Image(1408)
     )
 
@@ -34,7 +34,7 @@ private fun createAllClassesPage() {
         duration = 60,
         minAge = 3,
         maxAge = 4,
-        url = "https://www.kuchamala.ru/classes-music/",
+        className = "classes-music",
         image = Image(1622)
     )
 
@@ -46,16 +46,10 @@ private fun createAllClassesPage() {
     )
 
     val page = generateAllClassesPage(pageData).replace("\"", "\\\"")
-    insertPost(
-        pageContent = page,
+    writeToDatabase(
+        postContent = page,
         postTitle = "Все занятия",
-        postExcerpt = "",
         postStatus = "draft",
-        commentStatus = "closed",
-        pingStatus = "closed",
-        toPing = "",
-        pinged = "",
-        postContentFiltered = "",
         postName = "classes",
         postType = "page"
     )

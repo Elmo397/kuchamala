@@ -25,7 +25,7 @@ fun generateContent(classesInfo: List<ClassPreview>): String {
 
     for (info in classesInfo) {
         val durationCol = createDurationCol(info.duration)
-        val moreBtn = createMoreBnt(info.url)
+        val moreBtn = createMoreBnt(info.className)
         val ageCol = createAgeCol(info.minAge, info.maxAge, if (info.maxAge > 4) "лет" else "года")
 
         val imageContent = createImageContent(info.image)
@@ -40,7 +40,7 @@ fun generateContent(classesInfo: List<ClassPreview>): String {
             classes += " class-$age"
         }
 
-        val elWrapper = """el_wrapper_class="class$classes""""
+        val elWrapper = """el_wrapper_class="class$classes"""
         content += if (isLeft) generateRow("#ffffff", "$imageColumn$textColumn", elWrapper)
         else generateRow("#f5f5f5", "$textColumn$imageColumn", elWrapper)
 
@@ -56,8 +56,8 @@ fun createDurationCol(duration: Int) =
 fun createAgeCol(minAge: Int, maxAge: Int, suffix: String) =
     """[vc_column_inner width="1/4"][fildisi_pie_chart pie_chart_val="$maxAge" pie_chart_prefix="$minAge-" pie_chart_suffix=" $suffix" pie_chart_size="small" pie_chart_line_size="2" pie_line_style="round" title="возраст" heading_tag="h5" heading="h5" pie_chart_val_color="#171b1d" pie_active_color="#e75015" pie_chart_color="#e5e5e5"][/vc_column_inner]""".trimMargin()
 
-fun createMoreBnt(url: String) =
-    """[vc_column_inner width="1/2" css=".vc_custom_1510329721929{padding-top: 30px !important;}"][fildisi_button btn_fluid="custom" btn_custom_width="100%" align="center" button_text="Подробнее" button_color="primary-2" button_size="small" button_link="url:$url"][/vc_column_inner]"""
+fun createMoreBnt(className: String) =
+    """[vc_column_inner width="1/2" css=".vc_custom_1510329721929{padding-top: 30px !important;}"][fildisi_button btn_fluid="custom" btn_custom_width="100%" align="center" button_text="Подробнее" button_color="primary-2" button_size="small" button_link="url:http%3A%2F%2Fwww.kuchamala.ru%2F$className%2F|||"][/vc_column_inner]"""
 
 fun createTextContent(title: String, text: String) =
     """[fildisi_title heading_tag="h1"]$title[/fildisi_title][vc_column_text css=".vc_custom_1537426350179{margin-bottom: 30px !important;}"]$text[/vc_column_text]"""

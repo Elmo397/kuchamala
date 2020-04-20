@@ -5,20 +5,14 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.kuchamala.sheets.GoogleAuthorization
 import com.kuchamala.sheets.GoogleSheetsReader
 
-fun createWordpressPage(tabName: String, url: String, pageStatus: String = "draft") {
+fun createWordpressPage(tabName: String, className: String, pageStatus: String = "draft") {
     val page = createPage(tabName)
 
-    insertPost(
-            pageContent = page,
+    writeToDatabase(
+            postContent = page,
             postTitle = tabName,
-            postExcerpt = "",
             postStatus = pageStatus,
-            commentStatus = "closed",
-            pingStatus = "closed",
-            toPing = "",
-            pinged = "",
-            postContentFiltered = "",
-            postName = url,
+            postName = className,
             postType = "page"
     )
 }
