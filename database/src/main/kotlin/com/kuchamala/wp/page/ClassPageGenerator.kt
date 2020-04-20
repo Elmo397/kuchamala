@@ -1,6 +1,40 @@
 package com.kuchamala.wp.page
 
-fun createHeaderRow(title: String, textHtml: String, image: Image): String {
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.kuchamala.sheets.GoogleAuthorization
+import com.kuchamala.sheets.GoogleSheetsReader
+
+fun generatePage(classTitle: String): String {
+    val httpTransport: NetHttpTransport = GoogleNetHttpTransport.newTrustedTransport()
+    val credential = GoogleAuthorization().getCredentials(httpTransport)
+    val data = GoogleSheetsReader(httpTransport, credential).readClassData(classTitle)
+
+    val timetableAndPrice = """${data.price}
+                                |<h4>Расписание:</h4>
+                                |${data.timetable}
+                                |""".trimMargin()
+
+    var isLeft = true
+    var descriptionRow = ""
+    data.descriptions.forEach { description ->
+        descriptionRow += createDescriptionRow(description, isLeft)
+        isLeft  = !isLeft
+    }
+
+    var teacherRow = ""
+    data.teachers.forEach { teacher ->
+        teacherRow += createTeacherRow(teacher, isLeft)
+        isLeft  = !isLeft
+    }
+
+    val headerRow = createHeaderRow(data.title, timetableAndPrice, data.image)
+    val formRow = createFormRow(data.form, isLeft)
+
+    return "$headerRow$descriptionRow$teacherRow$formRow".replace("\"", "\\\"")
+}
+
+private fun createHeaderRow(title: String, textHtml: String, image: Image): String {
     val buttons: String =
         """<span style="display: inline !important; float: none; background-color: #ffffff; color: #333333; cursor: text; font-family: Georgia,'Times New Roman','Bitstream Charter',Times,serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;">[sc name="join-button"][sc name="more-button"]</span>"""
             .trimIndent()
@@ -21,7 +55,7 @@ fun createHeaderRow(title: String, textHtml: String, image: Image): String {
     }
 }
 
-fun createDescriptionRow(description: Description, isLeft: Boolean): String {
+private fun createDescriptionRow(description: Description, isLeft: Boolean): String {
     val textString =
         """[vc_column_text css=".vc_custom_1552745539215{margin-bottom: 30px !important;}"]${description.text}[/vc_column_text]"""
     val titleString =
@@ -49,7 +83,7 @@ fun createDescriptionRow(description: Description, isLeft: Boolean): String {
     }
 }
 
-fun createTeacherRow(teacher: Teacher, isLeft: Boolean): String {
+private fun createTeacherRow(teacher: Teacher, isLeft: Boolean): String {
     val vcColumnOpen = """[vc_column width="1/2" el_wrapper_class="column-height"]"""
     val vcColumnClose = "[/vc_column]"
 
@@ -74,7 +108,7 @@ fun createTeacherRow(teacher: Teacher, isLeft: Boolean): String {
     }
 }
 
-fun createFormRow(form: Form, isLeft: Boolean) = createRow(
+private fun createFormRow(form: Form, isLeft: Boolean) = createRow(
     bg_color = if (isLeft) "ffffff" else "f5f5f5",
     forColumns = false,
     separator = false,
