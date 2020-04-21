@@ -20,16 +20,28 @@ data class ClassPreview(
 data class ClassData(
     val title: String,
     val price: String,
-    val timetable: String,
+    val timetable: List<ClassGroup>,
     val image: Image,
     val descriptions: List<Description>,
     val teachers: List<Teacher>,
+    val diplomas: Diplomas,
     val form: Form
 )
+
+data class ClassGroup(
+    val minAge: Int,
+    val maxAge: Int?,
+    val timetable: List<GroupTimetable>,
+    val comment: String?
+)
+
+data class GroupTimetable(val weekDay: String, val timeStart: String)
 
 data class Description(val title: String?, val text: String, val image: Image)
 
 data class Teacher(val name: String, val about: String, val image: Image)
+
+data class Diplomas(val title: String, val diplomasId: List<Image>)
 
 data class Image(val id: Int)
 

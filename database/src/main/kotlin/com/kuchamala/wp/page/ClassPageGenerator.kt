@@ -2,36 +2,38 @@ package com.kuchamala.wp.page
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
-import com.kuchamala.sheets.GoogleAuthorization
 import com.kuchamala.sheets.GoogleSheetsReader
+import com.kuchamala.sheets.GoogleAuthorization
 
 fun generatePage(classTitle: String): String {
     val httpTransport: NetHttpTransport = GoogleNetHttpTransport.newTrustedTransport()
     val credential = GoogleAuthorization().getCredentials(httpTransport)
     val data = GoogleSheetsReader(httpTransport, credential).readClassData(classTitle)
 
+    val timetable = createTimetable(data.timetable)
     val timetableAndPrice = """${data.price}
                                 |<h4>Расписание:</h4>
-                                |${data.timetable}
+                                |$timetable
                                 |""".trimMargin()
+    val headerRow = createHeaderRow(data.title, timetableAndPrice, data.image)
 
     var isLeft = true
     var descriptionRow = ""
     data.descriptions.forEach { description ->
         descriptionRow += createDescriptionRow(description, isLeft)
-        isLeft  = !isLeft
+        isLeft = !isLeft
     }
 
     var teacherRow = ""
     data.teachers.forEach { teacher ->
         teacherRow += createTeacherRow(teacher, isLeft)
-        isLeft  = !isLeft
+        isLeft = !isLeft
     }
 
-    val headerRow = createHeaderRow(data.title, timetableAndPrice, data.image)
-    val formRow = createFormRow(data.form, isLeft)
+    val diplomasRow = createDiplomasRow(data.diplomas, isLeft)
+    val formRow = createFormRow(data.form, !isLeft)
 
-    return "$headerRow$descriptionRow$teacherRow$formRow".replace("\"", "\\\"")
+    return "$headerRow$descriptionRow$teacherRow$diplomasRow$formRow".replace("\"", "\\\"")
 }
 
 private fun createHeaderRow(title: String, textHtml: String, image: Image): String {
@@ -106,6 +108,10 @@ private fun createTeacherRow(teacher: Teacher, isLeft: Boolean): String {
     ) {
         columns
     }
+}
+
+private fun createDiplomasRow(diplomas: Diplomas, isLeft: Boolean): String {
+    return ""
 }
 
 private fun createFormRow(form: Form, isLeft: Boolean) = createRow(
