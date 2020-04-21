@@ -46,8 +46,7 @@ private fun createHeaderRow(title: String, textHtml: String, image: Image): Stri
         bg_color = "f5f5f5",
         forColumns = true,
         separator = true,
-        sectionId = null,
-        columnHeight = false
+        sectionId = null
     ) {
         """[vc_column width="1/2" tablet_sm_width="1"][fildisi_title heading_tag="h1"]${title}[/fildisi_title][vc_column_text css=".vc_custom_1552807612682{margin-bottom: 20px !important;}"]$textHtml[/vc_column_text]$buttons[/vc_column][vc_column width="1/2" tablet_sm_width="1"]${createImageColumn(
             image
@@ -70,18 +69,13 @@ private fun createDescriptionRow(description: Description, isLeft: Boolean): Str
     val imageColumn = "$vcColumnOpen${createImageColumn(description.image)}$vcColumnClose"
     val textColumn = "$vcColumnOpen$titleString$textString$vcColumnClose"
 
-    val columns =
-        if (isLeft) "$imageColumn$textColumn".trimIndent().trim()
-        else "$textColumn$imageColumn".trimIndent().trim()
-
     return createRow(
         bg_color = if (isLeft) "ffffff" else "f5f5f5",
         forColumns = true,
         separator = false,
-        sectionId = "description",
-        columnHeight = false
+        sectionId = "description"
     ) {
-        columns
+        if (isLeft) "$imageColumn$textColumn" else "$textColumn$imageColumn"
     }
 }
 
@@ -97,29 +91,48 @@ private fun createTeacherRow(teacher: Teacher, isLeft: Boolean): String {
     val teacherColumn =
         """$vcColumnOpen$titleString$textString[fildisi_empty_space][fildisi_empty_space height_multiplier="3x"]$vcColumnClose"""
 
-    val columns = if (isLeft) "$imageColumn$teacherColumn" else "$teacherColumn$imageColumn"
-
     return createRow(
         bg_color = if (isLeft) "ffffff" else "f5f5f5",
         forColumns = true,
         separator = false,
-        sectionId = null,
-        columnHeight = false
+        sectionId = null
     ) {
-        columns
+        if (isLeft) "$imageColumn$teacherColumn" else "$teacherColumn$imageColumn"
     }
 }
 
 private fun createDiplomasRow(diplomas: Diplomas, isLeft: Boolean): String {
-    return ""
+    val titleRow = createRow(
+        bg_color = if (isLeft) "ffffff" else "f5f5f5",
+        forColumns = false,
+        separator = false,
+        sectionId = null
+    ) {
+        """[vc_column width="1/2"][fildisi_title]${diplomas.title}[/fildisi_title][vc_column width="1/2"][/vc_column]"""
+    }
+
+    var diplomasColumns = ""
+    diplomas.diplomasId.forEach { diploma ->
+        diplomasColumns += """[vc_column width="1/3"][fildisi_single_image image_type="image-popup" image="${diploma.id}"][/vc_column]"""
+    }
+
+    val diplomasRow = createRow(
+        bg_color = if (isLeft) "ffffff" else "f5f5f5",
+        forColumns = false,
+        separator = false,
+        sectionId = null
+    ) {
+        diplomasColumns
+    }
+
+    return "$titleRow$diplomasRow"
 }
 
 private fun createFormRow(form: Form, isLeft: Boolean) = createRow(
     bg_color = if (isLeft) "ffffff" else "f5f5f5",
     forColumns = false,
     separator = false,
-    sectionId = "form",
-    columnHeight = false
+    sectionId = "form"
 ) {
     """[vc_column width="1/4"][/vc_column][vc_column width="1/2"][contact-form-7 id="${form.id}"][/vc_column][vc_column width="1/4"][/vc_column]"""
         .trimIndent()
@@ -130,7 +143,6 @@ private fun createRow(
     forColumns: Boolean,
     separator: Boolean,
     sectionId: String?,
-    columnHeight: Boolean,
     data: () -> String
 ): String {
     val columns: String =
@@ -145,11 +157,7 @@ private fun createRow(
         if (sectionId != null) """ section_id="$sectionId" """
         else ""
 
-    val columnHeightString: String =
-        if (columnHeight) """ el_wrapper_class="column-height" """
-        else ""
-
-    return """[vc_row bg_type="color"${columns}${separatorTop}bg_color="#${bg_color}"${sectionIdString}${columnHeightString}]${data()}[/vc_row]"""
+    return """[vc_row bg_type="color"${columns}${separatorTop}bg_color="#${bg_color}"${sectionIdString}]${data()}[/vc_row]"""
         .trimIndent()
         .trim()
 }
