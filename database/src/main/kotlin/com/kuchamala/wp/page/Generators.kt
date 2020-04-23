@@ -3,7 +3,7 @@ package com.kuchamala.wp.page
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.kuchamala.sheets.GoogleAuthorization
-import com.kuchamala.sheets.GoogleSheetsReader
+import com.kuchamala.sheets.reader.GoogleSheetsReader
 import com.kuchamala.wp.database.writeToDatabase
 
 fun createClassPage(tabName: String, className: String, pageStatus: String = "draft") {

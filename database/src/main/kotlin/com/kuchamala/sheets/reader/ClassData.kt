@@ -1,91 +1,35 @@
-package com.kuchamala.sheets
+package com.kuchamala.sheets.reader
 
-import com.google.api.client.auth.oauth2.Credential
-import com.google.api.client.http.javanet.NetHttpTransport
-import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.sheets.v4.Sheets
-import com.kuchamala.wp.database.getPostName
 import com.kuchamala.wp.page.*
 
-class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential) {
-    private val spreadsheetId = "1KXT7mqxzMDutsqStKT6U76fVqlTzFAap8bo3xeveJNw"
-    private var service: Sheets
-
-    init {
-        val jsonFactory = JacksonFactory.getDefaultInstance()
-        service = Sheets
-            .Builder(httpTransport, jsonFactory, credential)
-            .setApplicationName("КучаМала")
-            .build()
-    }
-
-    fun readAllClassesData(listTitle: String): AllClassesPage {
-        val listValues = service.spreadsheets().values()
-        val classes = getClasses(listValues, listTitle)
-        val header = listValues.get(spreadsheetId, "$listTitle!A3:C3").execute().getValues()
-
-        return AllClassesPage(
-            title = header[0][0].toString(),
-            text = header[0][1].toString(),
-            classesPreview = classes,
-            image = Image(header[0][2].toString().toInt())
-        )
-    }
-
-    fun readClassData(classListTitle: String) = ClassData(
-        getHeaderTitle(service, classListTitle),
-        getPriceText(service, classListTitle),
-        getTimetable(service, classListTitle),
-        getImage(service, classListTitle, "D3"),
-        getDescriptions(service, classListTitle),
-        getTeachers(service, classListTitle),
-        getDiplomas(service, classListTitle),
-        getFormId(service, classListTitle)
+class ClassData(private val service: Sheets, private val classListTitle: String, private val spreadsheetId: String) {
+    fun read() = ClassData(
+        getHeaderTitle(),
+        getPriceText(),
+        getTimetable(),
+        getImage("D3"),
+        getDescriptions(),
+        getTeachers(),
+        getDiplomas(),
+        getFormId()
     )
 
-    private fun getClasses(listValues: Sheets.Spreadsheets.Values, listTitle: String): List<ClassPreview> {
-        val classes = mutableListOf<ClassPreview>()
-
-        var rowNumb = 6
-        var row = listValues.get(spreadsheetId, "$listTitle!A$rowNumb:F$rowNumb").execute().getValues()
-
-        while (row != null) {
-            val title = row[0][0].toString()
-
-            classes.add(
-                ClassPreview(
-                    title = title,
-                    description = row[0][1].toString(),
-                    duration = row[0][2].toString().toInt(),
-                    minAge = row[0][3].toString().toInt(),
-                    maxAge = row[0][4].toString().toInt(),
-                    className = getPostName(title),
-                    image = Image(row[0][5].toString().toInt())
-                )
-            )
-
-            rowNumb++
-            row = listValues.get(spreadsheetId, "$listTitle!A$rowNumb:F$rowNumb").execute().getValues()
-        }
-
-        return classes
-    }
-
-    private fun getHeaderTitle(service: Sheets, classListTitle: String): String {
+    private fun getHeaderTitle(): String {
         val range = "$classListTitle!B3"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
 
         return response.getValues()[0][0].toString()
     }
 
-    private fun getPriceText(service: Sheets, classListTitle: String): String {
+    private fun getPriceText(): String {
         val range = "$classListTitle!C3"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
 
         return response.getValues()[0][0].toString()
     }
 
-    private fun getTimetable(service: Sheets, classListTitle: String): List<ClassGroup> {
+    private fun getTimetable(): List<ClassGroup> {
         val groups = mutableListOf<ClassGroup>()
 
         val listValues = service.spreadsheets().values()
@@ -93,11 +37,11 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         var row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:Q$rowNumb").execute().getValues()
 
         while (row != null) {
-           groups.add(
+            groups.add(
                 ClassGroup(
                     minAge = row[0][0].toString().toInt(),
                     maxAge = if (row[0][1] != "") row[0][1].toString().toInt() else null,
-                    timetable = getGroupTimetable(row[0], classListTitle),
+                    timetable = getGroupTimetable(row[0]),
                     comment = if (row[0][2] != "") row[0][2].toString() else null
                 )
             )
@@ -109,7 +53,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         return groups
     }
 
-    private fun getGroupTimetable(row: List<Any>, classListTitle: String): List<GroupTimetable> {
+    private fun getGroupTimetable(row: List<Any>): List<GroupTimetable> {
         val groupsTimetable = mutableListOf<GroupTimetable>()
         val weekDayRow =
             service.spreadsheets().values().get(spreadsheetId, "$classListTitle!A19:Q19").execute().getValues()[0]
@@ -129,7 +73,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         return groupsTimetable
     }
 
-    private fun getDescriptions(service: Sheets, classListTitle: String): List<Description> {
+    private fun getDescriptions(): List<Description> {
         val descriptions = mutableListOf<Description>()
         val titleRange = "$classListTitle!B"
         val textRange = "$classListTitle!C"
@@ -150,7 +94,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
 
             if (textRow != null) {
                 val text = textRow[0][0].toString()
-                val image = getImage(service, classListTitle, "D$rowNumb")
+                val image = getImage("D$rowNumb")
 
                 descriptions.add(Description(title, text, image))
             }
@@ -159,7 +103,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         return descriptions
     }
 
-    private fun getTeachers(service: Sheets, classListTitle: String): List<Teacher> {
+    private fun getTeachers(): List<Teacher> {
         val teachers = mutableListOf<Teacher>()
         val nameRange = "$classListTitle!B"
         val textRange = "$classListTitle!C"
@@ -168,7 +112,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         for (rowNumb in 9..13) {
             val nameRow = spreadsheets.get(spreadsheetId, "$nameRange$rowNumb").execute().getValues()
             if (nameRow != null) {
-                val image = getImage(service, classListTitle, "D$rowNumb")
+                val image = getImage("D$rowNumb")
                 val name = nameRow[0][0].toString()
                 val text = spreadsheets.get(spreadsheetId, "$textRange$rowNumb").execute().getValues()[0][0].toString()
 
@@ -179,7 +123,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         return teachers
     }
 
-    private fun getDiplomas(service: Sheets, classListTitle: String): Diplomas {
+    private fun getDiplomas(): Diplomas {
         val listValues = service.spreadsheets().values()
         val range = "$classListTitle!D"
 
@@ -189,7 +133,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         for (rowNumb in 14..16) {
             val row = listValues.get(spreadsheetId, "$range$rowNumb").execute().getValues()
             if (row != null) {
-                val image = getImage(service, classListTitle, "D$rowNumb")
+                val image = getImage("D$rowNumb")
                 diplomas.add(image)
             }
         }
@@ -197,7 +141,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         return Diplomas(title, diplomas)
     }
 
-    private fun getImage(service: Sheets, classListTitle: String, cell: String): Image {
+    private fun getImage(cell: String): Image {
         val range = "$classListTitle!$cell"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
         val id = response.getValues()[0][0].toString().toInt()
@@ -205,7 +149,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         return Image(id)
     }
 
-    private fun getFormId(service: Sheets, classListTitle: String): Form {
+    private fun getFormId(): Form {
         val range = "$classListTitle!B17"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
         val id = response.getValues()[0][0].toString().toInt()

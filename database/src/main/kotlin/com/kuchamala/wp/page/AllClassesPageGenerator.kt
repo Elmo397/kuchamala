@@ -51,7 +51,7 @@ private fun generateContent(classesInfo: List<ClassPreview>): String {
 }
 
 private fun createDurationCol(duration: Int) =
-    """[vc_column_inner width="1/4"][fildisi_pie_chart pie_chart_val="$duration" pie_chart_suffix="мин" pie_chart_size="small" pie_chart_line_size="2" pie_line_style="round" title="длительность" heading_tag="h5" heading="h5" pie_chart_val_color="#171b1d" pie_active_color="#e75015" pie_chart_color="#e5e5e5"][/vc_column_inner]"""
+    """[vc_column_inner width="1/4"][fildisi_pie_chart pie_chart_val="$duration" pie_chart_suffix=" мин" pie_chart_size="small" pie_chart_line_size="2" pie_line_style="round" title="длительность" heading_tag="h5" heading="h5" pie_chart_val_color="#171b1d" pie_active_color="#e75015" pie_chart_color="#e5e5e5"][/vc_column_inner]"""
 
 private fun createAgeCol(minAge: Int, maxAge: Int, suffix: String) =
     """[vc_column_inner width="1/4"][fildisi_pie_chart pie_chart_val="$maxAge" pie_chart_prefix="$minAge-" pie_chart_suffix=" $suffix" pie_chart_size="small" pie_chart_line_size="2" pie_line_style="round" title="возраст" heading_tag="h5" heading="h5" pie_chart_val_color="#171b1d" pie_active_color="#e75015" pie_chart_color="#e5e5e5"][/vc_column_inner]""".trimMargin()
