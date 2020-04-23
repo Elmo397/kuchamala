@@ -12,8 +12,9 @@ fun generatePage(classTitle: String): String {
 
     val timetable = createTimetable(data.timetable)
     val timetableAndPrice = """${data.price}
-                                |<h4>Расписание:</h4>
+                                |<h4>Группы:</h4>
                                 |$timetable
+                                |<h4> </h4>
                                 |""".trimMargin()
     val headerRow = createHeaderRow(data.title, timetableAndPrice, data.image)
 
@@ -30,7 +31,7 @@ fun generatePage(classTitle: String): String {
         isLeft = !isLeft
     }
 
-    val diplomasRow = createDiplomasRow(data.diplomas, isLeft)
+    val diplomasRow = if(data.diplomas.diplomasId.isNotEmpty()) createDiplomasRow(data.diplomas, isLeft) else ""
     val formRow = createFormRow(data.form, !isLeft)
 
     return "$headerRow$descriptionRow$teacherRow$diplomasRow$formRow".replace("\"", "\\\"")

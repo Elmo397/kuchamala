@@ -46,7 +46,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
     private fun getClasses(listValues: Sheets.Spreadsheets.Values, listTitle: String): List<ClassPreview> {
         val classes = mutableListOf<ClassPreview>()
 
-        var rowNumb = 7
+        var rowNumb = 6
         var row = listValues.get(spreadsheetId, "$listTitle!A$rowNumb:F$rowNumb").execute().getValues()
 
         while (row != null) {
@@ -89,8 +89,8 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
         val groups = mutableListOf<ClassGroup>()
 
         val listValues = service.spreadsheets().values()
-        var rowNumb = 20
-        var row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:J$rowNumb").execute().getValues()
+        var rowNumb = 21
+        var row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:Q$rowNumb").execute().getValues()
 
         while (row != null) {
            groups.add(
@@ -103,7 +103,7 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
             )
 
             rowNumb++
-            row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:J$rowNumb").execute().getValues()
+            row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:Q$rowNumb").execute().getValues()
         }
 
         return groups
@@ -112,14 +112,15 @@ class GoogleSheetsReader(httpTransport: NetHttpTransport, credential: Credential
     private fun getGroupTimetable(row: List<Any>, classListTitle: String): List<GroupTimetable> {
         val groupsTimetable = mutableListOf<GroupTimetable>()
         val weekDayRow =
-            service.spreadsheets().values().get(spreadsheetId, "$classListTitle!A19:J19").execute().getValues()[0]
+            service.spreadsheets().values().get(spreadsheetId, "$classListTitle!A19:Q19").execute().getValues()[0]
 
-        for (cell in 3..row.lastIndex) {
+        for (cell in 3..row.lastIndex step 2) {
             if (row[cell] != "") {
                 groupsTimetable.add(
                     GroupTimetable(
                         weekDay = weekDayRow[cell].toString(),
-                        timeStart = row[cell].toString()
+                        timeStart = row[cell].toString().split(","),
+                        timeEnd = row[cell + 1].toString().split(",")
                     )
                 )
             }

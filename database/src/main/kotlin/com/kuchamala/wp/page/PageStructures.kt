@@ -35,7 +35,7 @@ data class ClassGroup(
     val comment: String?
 )
 
-data class GroupTimetable(val weekDay: String, val timeStart: String)
+data class GroupTimetable(val weekDay: String, val timeStart: List<String>, val timeEnd: List<String>)
 
 data class Description(val title: String?, val text: String, val image: Image)
 
