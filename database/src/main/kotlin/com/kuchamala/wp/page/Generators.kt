@@ -21,7 +21,7 @@ fun createClassPage(tabName: String, className: String, pageStatus: String = "dr
 fun createAllClassesPage() {
     val httpTransport: NetHttpTransport = GoogleNetHttpTransport.newTrustedTransport()
     val credential = GoogleAuthorization().getCredentials(httpTransport)
-    val data = GoogleSheetsReader(httpTransport, credential).readAllClassesData("Все занятия")
+    val data = GoogleSheetsReader(httpTransport, credential).readAllClassesData("Онлайн Занятия")
 
     val page = generateAllClassesPage(data).replace("\"", "\\\"")
     writeToDatabase(

@@ -1,6 +1,6 @@
 package com.kuchamala.wp.page
 
-fun generateAllClassesPage(pageData: AllClassesPage): String {
+fun generateAllClassesPage(pageData: AllClassesPageData): String {
     val header = generateHeader(pageData.title, pageData.text, pageData.image)
     val classes = generateContent(pageData.classesPreview)
 

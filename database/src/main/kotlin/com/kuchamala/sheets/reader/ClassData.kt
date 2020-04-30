@@ -3,8 +3,8 @@ package com.kuchamala.sheets.reader
 import com.google.api.services.sheets.v4.Sheets
 import com.kuchamala.wp.page.*
 
-class ClassData(private val service: Sheets, private val classListTitle: String, private val spreadsheetId: String) {
-    fun read() = ClassData(
+class ClassData(private val service: Sheets, private val spreadsheetId: String, private val listTitle: String = "Лист1") {
+    fun read() = ClassPageData(
         getHeaderTitle(),
         getPriceText(),
         getTimetable(),
@@ -16,14 +16,14 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
     )
 
     private fun getHeaderTitle(): String {
-        val range = "$classListTitle!B3"
+        val range = "$listTitle!B3"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
 
         return response.getValues()[0][0].toString()
     }
 
     private fun getPriceText(): String {
-        val range = "$classListTitle!C3"
+        val range = "$listTitle!C3"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
 
         return response.getValues()[0][0].toString()
@@ -34,7 +34,7 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
 
         val listValues = service.spreadsheets().values()
         var rowNumb = 21
-        var row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:Q$rowNumb").execute().getValues()
+        var row = listValues.get(spreadsheetId, "$listTitle!A$rowNumb:Q$rowNumb").execute().getValues()
 
         while (row != null) {
             groups.add(
@@ -47,7 +47,7 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
             )
 
             rowNumb++
-            row = listValues.get(spreadsheetId, "$classListTitle!A$rowNumb:Q$rowNumb").execute().getValues()
+            row = listValues.get(spreadsheetId, "$listTitle!A$rowNumb:Q$rowNumb").execute().getValues()
         }
 
         return groups
@@ -56,7 +56,7 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
     private fun getGroupTimetable(row: List<Any>): List<GroupTimetable> {
         val groupsTimetable = mutableListOf<GroupTimetable>()
         val weekDayRow =
-            service.spreadsheets().values().get(spreadsheetId, "$classListTitle!A19:Q19").execute().getValues()[0]
+            service.spreadsheets().values().get(spreadsheetId, "$listTitle!A19:Q19").execute().getValues()[0]
 
         for (cell in 3..row.lastIndex step 2) {
             if (row[cell] != "") {
@@ -75,8 +75,8 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
 
     private fun getDescriptions(): List<Description> {
         val descriptions = mutableListOf<Description>()
-        val titleRange = "$classListTitle!B"
-        val textRange = "$classListTitle!C"
+        val titleRange = "$listTitle!B"
+        val textRange = "$listTitle!C"
 
         for (rowNumb in 4..8) {
             var title: String? = null
@@ -105,8 +105,8 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
 
     private fun getTeachers(): List<Teacher> {
         val teachers = mutableListOf<Teacher>()
-        val nameRange = "$classListTitle!B"
-        val textRange = "$classListTitle!C"
+        val nameRange = "$listTitle!B"
+        val textRange = "$listTitle!C"
         val spreadsheets = service.spreadsheets().values()
 
         for (rowNumb in 9..13) {
@@ -125,10 +125,10 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
 
     private fun getDiplomas(): Diplomas {
         val listValues = service.spreadsheets().values()
-        val range = "$classListTitle!D"
+        val range = "$listTitle!D"
 
         val diplomas = mutableListOf<Image>()
-        val title = listValues.get(spreadsheetId, "$classListTitle!B14").execute().getValues()[0][0].toString()
+        val title = listValues.get(spreadsheetId, "$listTitle!B14").execute().getValues()[0][0].toString()
 
         for (rowNumb in 14..16) {
             val row = listValues.get(spreadsheetId, "$range$rowNumb").execute().getValues()
@@ -142,7 +142,7 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
     }
 
     private fun getImage(cell: String): Image {
-        val range = "$classListTitle!$cell"
+        val range = "$listTitle!$cell"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
         val id = response.getValues()[0][0].toString().toInt()
 
@@ -150,7 +150,7 @@ class ClassData(private val service: Sheets, private val classListTitle: String,
     }
 
     private fun getFormId(): Form {
-        val range = "$classListTitle!B17"
+        val range = "$listTitle!B17"
         val response = service.spreadsheets().values().get(spreadsheetId, range).execute()
         val id = response.getValues()[0][0].toString().toInt()
 

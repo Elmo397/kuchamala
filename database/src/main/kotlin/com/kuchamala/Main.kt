@@ -3,10 +3,10 @@ package com.kuchamala
 import com.kuchamala.wp.page.*
 
 fun main() {
-//    println("Class pages...")
-//    createClassesPages()
-//    Thread.sleep(60000)
-//    println("All classes page...")
+    println("Class pages...")
+    createClassesPages()
+    Thread.sleep(60000)
+    println("All classes page...")
     createAllClassesPage()
 }
 
